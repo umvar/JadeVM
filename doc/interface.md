@@ -17,7 +17,6 @@ enum jade_vm_state {
 
 struct jade_vm {
 	enum jade_vm_state state;
-	int argc;
 	unsigned short pc;
 	unsigned short sp;
 	char* instr_mem;
@@ -29,4 +28,23 @@ void vm_destroy(struct jade_vm* vm);
 void vm_load_program(struct jade_vm* vm, const char* path);
 void vm_step(struct jade_vm* vm);
 void vm_continue(struct jade_vm* vm);
+
+/* Undefined behavior:
+	- vm_init():
+		- calling multiple times
+	- vm_destroy():
+		- calling before vm_init()
+		- calling multiple times
+	- vm_load_program():
+		- calling before vm_init()
+		- calling after vm_destroy()
+	- vm_step():
+		- calling before vm_init()
+		- calling before vm_load_program()
+		- calling after vm_destroy()
+		- calling if state is not JADE_VM_READY
+	- vm_continue():
+		- calling before vm_init()
+		- calling before vm_load_program()
+*/
 ```

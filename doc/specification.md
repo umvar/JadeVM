@@ -4,22 +4,22 @@
 JadeVM's memory is separated into two, non-overlapping regions: instruction memory and stack memory.
 
 Instruction memory is one-byte addressable and is comprised of JadeVM instructions. The Program Counter register
-contains the offset of the next instruction to execute relative to the start of instruction memory. All instructions are
+contains the index of the next instruction to execute relative to the start of instruction memory. All instructions are
 executed sequentially, and deviation from this order only occurs on branching instructions (`ret/jmp/jmpt/jmpf/call`).
 The behavior of the execution of malformed JadeVM instructions is undefined.
 
-Stack memory is four-byte addressable and is comprised of data utilized in most of the JadeVM instructions. The
-Stack Pointer register contains the offset of the last pushed value on the stack relative to the start of stack memory.
-The behavior of a stack overflow and underflow is undefined. Program arguments are pushed (in reverse-order) onto the
-stack, followed by the argument count.
+Stack memory is two-byte addressable and is comprised of data. The Stack Pointer register contains the index of the last
+pushed value on the stack relative to the start of stack memory. The behavior of a stack overflow and underflow is
+undefined. Program arguments are pushed onto the stack, followed by the argument count.
 
-Both the instruction memory and stack memory are 64KiB in size, though their initial contents are unspecified.
+Both the instruction memory and stack memory are 64KiB in size, though their initial contents are unspecified except
+as specified above.
 
 ## Registers
 Register | Description     | Initial Value
 ---------|-----------------|--------------
 pc       | Program Counter | `0`
-sp       | Stack Pointer   | `1 + argc`
+sp       | Stack Pointer   | `argc`
 
 ## Instruction Reference
 Opcode | Mnemonic   | Description
@@ -36,8 +36,8 @@ Opcode | Mnemonic   | Description
 0x09   | or         | `x = pop(); push(pop() \| x);`
 0x0A   | and        | `x = pop(); push(pop() & x);`
 0x0B   | xor        | `x = pop(); push(pop() ^ x);`
-0x0C   | shl        | `x = pop(); push(pop() << x);`
-0x0D   | shr        | `x = pop(); push(pop() >> x);`
+0x0C   | shl u8     | `x = pop(); push(pop() << u8);`
+0x0D   | shr u8     | `x = pop(); push(pop() >> u8);`
 0x0E   | pop u8     | `sp -= u8;`
 0x0F   | ret        | `pc = pop();`
 0x10   | jmp s16    | `pc += s16;`
@@ -50,6 +50,8 @@ Opcode | Mnemonic   | Description
 0x17   | le         | `x = pop(); push(pop() <= x);`
 0x18   | gt         | `x = pop(); push(pop() > x);`
 0x19   | ge         | `x = pop(); push(pop() >= x);`
-0x1A   | get s16    | `push(memory[sp + s16]);`
-0x1B   | set s16    | `memory[sp + s16] = pop();`
+0x1A   | get u16    | `push(memory[sp - u16]);`
+0x1B   | set u16    | `if (u16 != 0) memory[sp - u16] = pop();`
 0x1C   | imm s16    | `push(s16);`
+
+Note: instruction operands are in little-endian.
