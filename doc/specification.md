@@ -33,7 +33,7 @@ Opcode | Mnemonic   | Description
 0x06   | div        | `x = pop(); push(pop() / x);`
 0x07   | mod        | `x = pop(); push(pop() % x);`
 0x08   | not        | `push(~pop());`
-0x09   | or         | `x = pop(); push(pop() | x);`
+0x09   | or         | `x = pop(); push(pop() \| x);`
 0x0A   | and        | `x = pop(); push(pop() & x);`
 0x0B   | xor        | `x = pop(); push(pop() ^ x);`
 0x0C   | shl        | `x = pop(); push(pop() << x);`
