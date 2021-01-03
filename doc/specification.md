@@ -36,8 +36,8 @@ Opcode | Mnemonic   | Description
 0x09   | or         | `x = pop(); push(pop() \| x);`
 0x0A   | and        | `x = pop(); push(pop() & x);`
 0x0B   | xor        | `x = pop(); push(pop() ^ x);`
-0x0C   | shl u8     | `x = pop(); push(pop() << u8);`
-0x0D   | shr u8     | `x = pop(); push(pop() >> u8);`
+0x0C   | shl u8     | `push(pop() << u8);`
+0x0D   | shr u8     | `push(pop() >> u8);`
 0x0E   | pop u8     | `sp -= u8;`
 0x0F   | ret        | `pc = pop();`
 0x10   | jmp s16    | `pc += s16;`
