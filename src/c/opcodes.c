@@ -1,8 +1,8 @@
 #include "opcodes.h"
 #include "vm.h"
 
-#define BINARYOP(op) short x = vm_pop(vm); vm_push(vm, vm_pop(vm) op x)
 #define UNARYOP(op) vm_push(vm, op vm_pop(vm))
+#define BINARYOP(op) short x = vm_pop(vm); vm_push(vm, vm_pop(vm) op x)
 #define BINARYOPIMM(op) vm_push(vm, vm_pop(vm) op operand)
 
 void op_hlt(jade_vm* vm, short operand) {
