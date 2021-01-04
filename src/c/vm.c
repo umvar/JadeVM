@@ -66,7 +66,7 @@ void vm_load_program(jade_vm* vm, const char* path) {
 		fclose(file);
 		vm->state = JADE_VM_READY;
 	} else {
-		perror("jadevm file.jb\n\nExecutes a JadeVM bytecode file.");
+		perror("fopen() failed");
 		exit(EXIT_FAILURE);
 	}
 }
