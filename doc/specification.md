@@ -9,7 +9,7 @@ executed sequentially, and deviation from this order only occurs on branching in
 The behavior of the execution of malformed JadeVM instructions is undefined.
 
 Stack memory is two-byte addressable and is comprised of data. The Stack Pointer register contains the index of the last
-pushed value on the stack relative to the start of stack memory. The behavior of a stack overflow and underflow is
+pushed value on the stack relative to the start of stack memory. The behaviour of a stack overflow and underflow is
 undefined. Program arguments are pushed onto the stack, followed by the argument count.
 
 Both the instruction memory and stack memory are 64KiB in size, though their initial contents are unspecified except
