@@ -1,14 +1,14 @@
 # JadeVM Specification
 
 ## Memory Model
-JadeVM's memory is separated into two, non-overlapping regions: instruction memory and stack memory.
+JadeVM memory is separated into two, non-overlapping regions: instruction memory and stack memory.
 
-Instruction memory is one-byte addressable and is comprised of JadeVM instructions. The Program Counter register
+Instruction memory is one-byte addressable and is comprised entirely of JadeVM instructions. The Program Counter register
 contains the index of the next instruction to execute relative to the start of instruction memory. All instructions are
 executed sequentially, and deviation from this order only occurs on branching instructions (`ret/jmp/jmpt/jmpf/call`).
-The behavior of the execution of malformed JadeVM instructions is undefined.
+The behaviour of the execution of malformed JadeVM instructions is undefined.
 
-Stack memory is two-byte addressable and is comprised of data. The Stack Pointer register contains the index of the last
+Stack memory is two-byte addressable and is comprised entirely of data. The Stack Pointer register contains the index of the last
 pushed value on the stack relative to the start of stack memory. The behaviour of a stack overflow and underflow is
 undefined. Program arguments are pushed onto the stack, followed by the argument count.
 
